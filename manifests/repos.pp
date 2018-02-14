@@ -17,7 +17,10 @@ class docker::repos {
           $key_source = $docker::package_key_source
           $package_key = $docker::package_key
         }
-        apt::source { 'docker':
+        package { ['debian-keyring', 'debian-archive-keyring']:
+          ensure => 'installed',
+        }
+        ->apt::source { 'docker':
           location          => $location,
           release           => $docker::package_release,
           repos             => $docker::package_repos,
